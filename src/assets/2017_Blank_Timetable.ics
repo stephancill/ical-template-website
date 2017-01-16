@@ -3,7 +3,7 @@ PRODID:-//Google Inc//Google Calendar 70.9054//EN
 VERSION:2.0
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-X-WR-CALNAME:Blank Timetable
+X-WR-CALNAME:Populated Timetable
 X-WR-TIMEZONE:Africa/Johannesburg
 X-WR-CALDESC:
 BEGIN:VTIMEZONE
