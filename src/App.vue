@@ -1,20 +1,26 @@
 <template>
     <div id="app">
-        <ul id="day">
-            <div id="container">
-                <br>
-                <li v-for="day in days">
-                    <div style="float: right;">
-                        <label for="">{{day.name}}</label>
-                        <li v-for="lesson in day.lessons">
-                            <input v-model="lesson.value" type="text" name="" :placeholder="lesson.name">
-                            <!-- <input  name="" name=""> -->
-                        </li>
-                    </div>
-                </li>
-                <button @click="getSubjects" type="button" name="button">Test</button>
+        <a href="https://docs.google.com/document/d/1FOt5v8nEpa0tXRXqlaJvBuNGLsiRC5EckL3zvCWZLj8">Instructions here on how to import into Google Calendar</a>
+        <div id="container">
+            <div style="margin-left:auto;margin-right:auto;">
+                <ul id="day">
+
+                    <br>
+                    <li v-for="day in days">
+                        <div style="margin-right: auto;">
+                            <label for="">{{day.name}}</label>
+                            <li v-for="lesson in day.lessons">
+                                <input v-model="lesson.value" type="text" name="" :placeholder="lesson.name">
+                                <!-- <input  name="" name=""> -->
+                            </li>
+                        </div>
+                    </li>
+
+
+                </ul>
             </div>
-        </ul>
+        </div>
+        <button @click="getSubjects" type="button" name="button">Generate and download</button>
     </div>
 </template>
 
@@ -229,12 +235,12 @@ h1, h2 {
 
 ul {
   list-style-type: none;
-  padding: 0;
+  /*padding: 0;*/
 }
 
 li {
-  display: inline-block;
-  margin: 0 10px;
+  /*display: inline-block;*/
+  /*margin: 0 10px;*/
 }
 
 a {
@@ -243,4 +249,6 @@ a {
 #container {
     width: 100px
 }
+
+
 </style>
