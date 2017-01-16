@@ -1,26 +1,31 @@
 <template>
     <div id="app">
-        <a href="https://docs.google.com/document/d/1FOt5v8nEpa0tXRXqlaJvBuNGLsiRC5EckL3zvCWZLj8">Instructions here on how to import into Google Calendar</a>
-        <div id="container">
-            <div style="margin-left:auto;margin-right:auto;">
-                <ul id="day">
+        <h3>Instructions:</h3>
+        <p>Enter subject names, press the "Generate and download" button at the bottom of the page, <a href="https://docs.google.com/document/d/1FOt5v8nEpa0tXRXqlaJvBuNGLsiRC5EckL3zvCWZLj8">import the downloaded file into Google Calendar</a></p>
+        <form class="" onsubmit="return false;" method="post">
+            <div id="container">
+                <div style="margin-left:auto;margin-right:auto;">
+                    <ul id="day">
 
-                    <br>
-                    <li v-for="day in days">
-                        <div style="margin-right: auto;">
-                            <label for="">{{day.name}}</label>
-                            <li v-for="lesson in day.lessons">
-                                <input v-model="lesson.value" type="text" name="" :placeholder="lesson.name">
-                                <!-- <input  name="" name=""> -->
-                            </li>
-                        </div>
-                    </li>
+                        <br>
+                        <li v-for="day in days">
+                            <div style="margin-right: auto;">
+                                <label for="">{{day.name}}</label>
+                                <li v-for="lesson in day.lessons">
+                                    <input v-model="lesson.value" type="text" name="" :placeholder="lesson.name">
+                                    <!-- <input  name="" name=""> -->
+                                </li>
+                            </div>
+                        </li>
 
 
-                </ul>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <button @click="getSubjects" type="button" name="button">Generate and download</button>
+            <button @click="getSubjects" type="submit" name="button">Generate and download</button>
+        </form>
+
+
     </div>
 </template>
 
