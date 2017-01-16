@@ -1,6 +1,7 @@
 <template>
     <div id="app">
-        <a href="https://docs.google.com/document/d/1FOt5v8nEpa0tXRXqlaJvBuNGLsiRC5EckL3zvCWZLj8">Instructions here on how to import into Google Calendar</a>
+        <h3>Instructions:</h3>
+        <p>Enter subject names, press the "Generate and download" button at the bottom of the page, <a href="https://docs.google.com/document/d/1FOt5v8nEpa0tXRXqlaJvBuNGLsiRC5EckL3zvCWZLj8">import the downloaded file into Google Calendar</a></p>
         <div id="container">
             <div style="margin-left:auto;margin-right:auto;">
                 <ul id="day">
