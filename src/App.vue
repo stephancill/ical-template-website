@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <h4>Disclaimer: Does not currently support iOS</h4>
         <h3>Instructions:</h3>
         <p>Enter subject names, press the "Generate and download" button at the bottom of the page, <a href="https://docs.google.com/document/d/1FOt5v8nEpa0tXRXqlaJvBuNGLsiRC5EckL3zvCWZLj8">import the downloaded file into Google Calendar</a></p>
         <form class="" onsubmit="return false;" method="post">
