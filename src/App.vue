@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import ical from 'ical.js'
+import icalendar from 'icalendar'
 import FileSaver from 'file-saver'
 
 export default {
@@ -177,45 +177,24 @@ export default {
     methods: {
         getSubjects() {
             let lessons = []
-            this.days.filter(day => lessons.push(...day.lessons.map(lesson => lesson.value)));
+            this.days.filter(day => lessons.push(...day.lessons.map(lesson => lesson.name)));
             this.fetchTemplateFrom(this.templateEndpoint, (template) => {
                 // Use retrieved ics
-                let icsJson = this.parseTemplate(template);
                 lessons = lessons.reverse()
-                const icsLessons = []
-                for (var i = icsJson[2].length-1; i > 0; i--) {
-                    const icsName = icsJson[2][i][1][11][3]
-                    if (icsName === "CONFIRMED") {
-                        // Some cases index 11 is the status and the actual event name is in 12
-                        icsJson[2][i][1][12][3] = lessons[i-1]
-                        // console.log(icsJson[2][i][1][12][3], lessons[i-1]);
-                    } else {
-                        icsJson[2][i][1][11][3] = lessons[i-1]
-                        // console.log(icsJson[2][i][1][11][3], lessons[i-1]);
-                    }
+                let calendar = this.parseTemplate(template);
+                console.log(lessons);
+                for (var i = calendar.events().length-1; i > -1; i--) {
+                    calendar.events()[i].setSummary(lessons[i])
+                    console.log(calendar.events()[i].properties.SUMMARY[1].value, lessons[i]);
                 }
-
-                // for (var i = icsJson[2].length-1; i > 0; i--) {
-                //     const icsName = icsJson[2][i][1][11][3]
-                //     console.log("testings");
-                //     if (icsName === "CONFIRMED") {
-                //         // Some cases index 11 is the status and the actual event name is in 12
-                //         // icsJson[2][i][1][12][3] = lessons[i-1])
-                //         console.log(icsJson[2][i][1][12][3]);
-                //     } else {
-                //         // icsJson[2][i][1][11][3] = lessons[i-1])
-                //         console.log(icsJson[2][i][1][11][3]);
-                //     }
-                // }
-                console.log(flatten(icsJson));
-                for (var i = 0; i < lessons.length; i++) {
-                    // console.log(lessons[i], icsLessons[i]);
-                }
+                console.log(calendar.toString());
+                var blob = new Blob([calendar.toString()], {type: "text/plain;charset=utf-8"});
+                FileSaver.saveAs(blob, "2017_Q1_Timetable.ics");
             });
         },
         parseTemplate(template) {
-            let jcalData = ical.parse(template)
-            return jcalData
+            var ical = icalendar.parse_calendar(template);
+            return ical
         },
         fetchTemplateFrom(endpoint, callback) {
             let ics = ""
@@ -225,25 +204,6 @@ export default {
         }
 
     }
-}
-
-function flatten(arr, result = []) {
-  for (let i = 0, length = arr.length; i < length; i++) {
-    const value = arr[i]
-    if (Array.isArray(value)) {
-      for (let i = 0, length = value.length; i < length; i++) {
-        const value2 = value[i]
-        if (Array.isArray(value2)) {
-          flatten(value2, result)
-        } else {
-          result.push(value2)
-        }
-      }
-    } else {
-      result.push(value)
-    }
-  }
-  return result
 }
 </script>
 
