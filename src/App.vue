@@ -177,7 +177,13 @@ export default {
     methods: {
         getSubjects() {
             let lessons = []
-            this.days.filter(day => lessons.push(...day.lessons.map(lesson => lesson.name)));
+            this.days.filter(day => lessons.push(...day.lessons.map(lesson => {
+                if (lesson.value != '') {
+                    return lesson.value
+                } else {
+                    return lesson.name
+                }
+            })));
             this.fetchTemplateFrom(this.templateEndpoint, (template) => {
                 // Use retrieved ics
                 lessons = lessons.reverse()
@@ -187,7 +193,7 @@ export default {
                     calendar.events()[i].setSummary(lessons[i])
                     console.log(calendar.events()[i].properties.SUMMARY[1].value, lessons[i]);
                 }
-                console.log(calendar.toString());
+                // console.log(calendar.toString());
                 var blob = new Blob([calendar.toString()], {type: "text/plain;charset=utf-8"});
                 FileSaver.saveAs(blob, "2017_Q1_Timetable.ics");
             });
