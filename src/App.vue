@@ -1,32 +1,36 @@
 <template>
     <div id="app">
+        <h4>Disclaimer: Does not currently support iOS</h4>
         <h3>Instructions:</h3>
         <p>Enter subject names, press the "Generate and download" button at the bottom of the page, <a href="https://docs.google.com/document/d/1FOt5v8nEpa0tXRXqlaJvBuNGLsiRC5EckL3zvCWZLj8">import the downloaded file into Google Calendar</a></p>
-        <div id="container">
-            <div style="margin-left:auto;margin-right:auto;">
-                <ul id="day">
+        <form class="" onsubmit="return false;" method="post">
+            <div id="container">
+                <div style="margin-left:auto;margin-right:auto;">
+                    <ul id="day">
+                        <br>
+                        <li v-for="day in days">
+                            <div style="margin-right: auto;">
+                                <label for="">{{day.name}}</label>
+                                <li v-for="lesson in day.lessons">
+                                    <input v-model="lesson.value" type="text" name="" :placeholder="lesson.name">
+                                    <!-- <input  name="" name=""> -->
+                                </li>
+                            </div>
+                        </li>
 
-                    <br>
-                    <li v-for="day in days">
-                        <div style="margin-right: auto;">
-                            <label for="">{{day.name}}</label>
-                            <li v-for="lesson in day.lessons">
-                                <input v-model="lesson.value" type="text" name="" :placeholder="lesson.name">
-                                <!-- <input  name="" name=""> -->
-                            </li>
-                        </div>
-                    </li>
 
-
-                </ul>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <button @click="getSubjects" type="button" name="button">Generate and download</button>
+            <button @click="getSubjects" type="submit" name="button">Generate and download</button>
+        </form>
+
+
     </div>
 </template>
 
 <script>
-import icalendar from 'icalendar'
+// import icalendar from 'icalendar'
 import FileSaver from 'file-saver'
 
 export default {
@@ -193,21 +197,31 @@ export default {
             })));
             this.fetchTemplateFrom(this.templateEndpoint, (template) => {
                 // Use retrieved ics
-                lessons = lessons.reverse()
-                let calendar = this.parseTemplate(template);
-                console.log(lessons);
-                for (var i = calendar.events().length-1; i > -1; i--) {
-                    calendar.events()[i].setSummary(lessons[i])
-                    console.log(calendar.events()[i].properties.SUMMARY[1].value, lessons[i]);
+                // lessons = lessons.reverse()
+                let calendar = this.parseTemplate(template).split("\n");
+                // console.log(lessons);
+                // console.log(calendar.events());
+                let counter = lessons.length-1
+                for (var i = calendar.length-1; i > -1; i--) {
+                    // calendar.events()[i].setSummary(lessons[i])
+                    if (calendar[i].slice(0, 7) === "SUMMARY"){
+                        calendar[i] = `SUMMARY:${lessons[counter]}`
+                        // console.log(calendar[i], lessons[counter]);
+                        counter -= 1
+                    }
+                    // console.log(calendar[i]);
+                    // console.log(calendar.events()[i].properties.SUMMARY[1].value, calendar.events()[i].properties.DTSTART[0].value);
+                    // console.log(calendar.events()[i].toString());
                 }
                 // console.log(calendar.toString());
-                var blob = new Blob([calendar.toString()], {type: "text/plain;charset=utf-8"});
+                var blob = new Blob([calendar.join("\n")], {type: "text/plain;charset=utf-8"});
                 FileSaver.saveAs(blob, "2017_Q1_Timetable.ics");
             });
         },
         parseTemplate(template) {
-            var ical = icalendar.parse_calendar(template);
-            return ical
+            // console.log(template);
+            // var ical = icalendar.parse_calendar(template);
+            return template
         },
         fetchTemplateFrom(endpoint, callback) {
             let ics = ""
