@@ -13,7 +13,6 @@
                                 <label for="">{{day.name}}</label>
                                 <li v-for="lesson in day.lessons">
                                     <input v-model="lesson.value" type="text" name="" :placeholder="lesson.name">
-                                    <!-- <input  name="" name=""> -->
                                 </li>
                             </div>
                         </li>
