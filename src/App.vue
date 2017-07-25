@@ -5,19 +5,17 @@
         <p>Enter subject names, press the "Generate and download" button at the bottom of the page, <a href="https://docs.google.com/document/d/1FOt5v8nEpa0tXRXqlaJvBuNGLsiRC5EckL3zvCWZLj8">import the downloaded file into Google Calendar</a></p>
         <form class="" onsubmit="return false;" method="post">
             <div id="container">
-                <div style="margin-left:auto;margin-right:auto;">
+                <div class="day-container">
                     <ul id="day">
                         <br>
                         <li v-for="day in days">
-                            <div style="margin-right: auto;">
+                            <div>
                                 <label for="">{{day.name}}</label>
                                 <li v-for="lesson in day.lessons">
                                     <input v-model="lesson.value" type="text" name="" :placeholder="lesson.name">
                                 </li>
                             </div>
                         </li>
-
-
                     </ul>
                 </div>
             </div>
@@ -201,7 +199,7 @@ export default {
                 // console.log(lessons);
                 // console.log(calendar.events());
                 let counter = lessons.length-1
-                for (var i = calendar.length-1; i > -1; i--) {
+                for (var i = 0; i < calendar.length-1; i++) {
                     // calendar.events()[i].setSummary(lessons[i])
                     if (calendar[i].slice(0, 7) === "SUMMARY"){
                         calendar[i] = `SUMMARY:${lessons[counter]}`
