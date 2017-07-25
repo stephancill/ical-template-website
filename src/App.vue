@@ -21,7 +21,7 @@
             </div>
             <button @click="getSubjects" type="submit" name="button">Generate and download</button>
         </form>
-
+        <p>v0.2</p>
 
     </div>
 </template>
